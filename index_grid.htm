@@ -15,9 +15,8 @@
         display: grid;
         /* 7 columnas que usen el mismo espacio sobrante */
         grid-template-columns: repeat(7, 1fr);
-        /* 6 filas que usen el mismo espacio sobrante. Es necesario indicar las filas
-        pues luego usamos la propiedad aspect-ratio en las cajas para que tengan el
-        mismo ancho que alto, lo que haría que una caja ocupase toda la pantalla */
+        /* 6 filas que usen el mismo espacio sobrante, aunque no sería necesario
+        indicarlas, pues ya las añade grid si hacen falta */
         grid-template-rows: repeat(6, 1fr);
         gap: 20px; /* Espacio horizontal y vertical entre los días */
         /* Centramos los días horizontalmente dentro del contenedor .calendario */
