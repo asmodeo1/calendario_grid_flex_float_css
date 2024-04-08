@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario</title>
+    <style>
+      /* Usando float:
+        - ponemos float:left a cada caja del día
+        - metemos cada 7 días en una caja para que no ponga más de 7 días en una fila.
+        Otra opción sería calcular anchos para que no cupiesen más de 7.
+        - Problema: si empequeñecemos la ventana, alguno de los días se puede pasar a otra
+        fila. Una solución sería crear un diseño responsivo o darle un min-width en píxeles
+        a section o .semana para que no se bajara ningún día 
+      */
+      .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .semana div {
+        font-size: 2rem;
+        text-align: center;
+        border: 1px solid black;
+        float: left;
+        margin: 10px;
+        width: 10%;
+        /* Para que la caja tenga el mismo alto que ancho */
+        aspect-ratio: 1;
+      }
+      /* Ponemos los domingos en rojo: 7n indica cada 7 divs */
+      .semana div:nth-of-type(7n) {
+        color: red;
+      }
+      /* Ponemos en verde el día 4 y 12
+      - el div 4 de la primera semana
+      - el div 5 de la segunda semana
+      También le ponemos posicionamiento relative pues queremos que al pasar el 
+      ratón por encima de estos días aparezca un texto explicativo del día, lo cual
+      haremos usando posicionamiento absoluto en ese texto para colocarlo respecto a su
+      contenedor. Si no lo hacemos, son contenedor, a efecto de posicionamiento absoluto,
+       será el body.
+
+       Una opción más sencilla sería crear una clase y aplicarle esa clase a esos divs 
+       */
+      .semana:first-of-type div:nth-of-type(4), .semana:nth-of-type(2) div:nth-of-type(5) {
+        position: relative;
+        color: green;
+
+      }
+      /* Los textos de esos días especiales los vamos a tener en un span oculto.
+      También sería más corto usar una clase en lugar de escribir todo esto.
+      Otra alternativa sería: los divs dentro de semana que tengan span 
+      .semana div:has(span) { */
+      .semana:first-of-type div:nth-of-type(4) span, .semana:nth-of-type(2) div:nth-of-type(5) span {
+        display: none; /* Para que no se eva ni ocupe espacio. Con visibility: hidden 
+        podemos ocultarlo pero su espacio seguiría y se vería vacía esa zona */
+        position: absolute; /* Para colocar el span a nuestro gusto dentro de la caja */
+        top:50%; /* Que empieze a dibujar la caja a partir del 50% del contenedor */
+        left:20%; /* y un 20% a la izquierda */
+        font-size: 1rem;
+        background-color: rgb(23, 105, 237);
+        color: white;
+        padding: 5px;
+      }
+      /* Otra alternativa sería: los divs dentro de semana que tengan span 
+      .semana div:has(span):hover { */
+      .semana:first-of-type div:nth-of-type(4):hover span, .semana:nth-of-type(2) div:nth-of-type(5):hover span {
+        display: block; /* Para volver a mostrarlo */
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <!-- Debemos crear un contenedor por cada 7 días para 
+      asegurarnos que no se pongan más. Y como siempre, como sus
+    elementos flotan, hay que aplicarle el clearfix al contenedor -->
+      <div class="semana clearfix">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4<span>Examen de HTML</span></div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+      </div>
+      <div class="semana clearfix">
+        <div>8</div>
+        <div>9</div>
+        <div>10</div>
+        <div>11</div>
+        <div>12<span>Examen de CSS</span></div>
+        <div>13</div>
+        <div>14</div>
+      </div>
+      <div class="semana clearfix">
+        <div>15</div>
+        <div>16</div>
+        <div>17</div>
+        <div>18</div>
+        <div>19</div>
+        <div>20</div>
+        <div>21</div>
+      </div>
+      <div class="semana clearfix">
+        <div>22</div>
+        <div>23</div>
+        <div>24</div>
+        <div>25</div>
+        <div>26</div>
+        <div>27</div>
+        <div>28</div>
+      </div>
+      <div class="semana clearfix">
+        <div>29</div>
+        <div>30</div>
+        <div>31</div>
+      </div>
+    </section>
+  </body>
+</html>

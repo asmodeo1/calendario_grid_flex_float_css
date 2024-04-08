@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario</title>
+    <style>
+       /* Usando flex:
+        - ponemos display: flex al contenedor de los días (.calendario)
+        - metemos cada 7 días en una caja (.semana) para que no ponga más de 7 días en una fila.
+        - a .semana también le damos un display: flex para colocar los días en fila
+        Otra opción sería calcular anchos para que no cupiesen más de 7.
+      */
+      .calendario {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        font-size: 2rem;
+        display: flex;
+        /* Cada semana dentro del calendario debe ir en una fila diferente */
+        flex-direction: column;
+        gap: 15px; /* margen horizontal y vertical entre los elementos del flex */
+      }
+      .calendario header {
+        text-align: center;
+        background-color: rgb(19, 146, 220);
+        color: white;
+      }
+      .calendario .semana {
+        /* A su vez cada 7 días lo ponemos en su propio flex */
+        display: flex;
+        /* Espacio horizontal y vertical entre cada día */
+        gap: 20px;
+        /* Si ahora queremos centrar o dejar espacio entre los días,
+        podemos usar la propiedad justify-content con el valor center, space-around,....
+        El problema es que la última semana solo tiene tres días, con lo
+        que quedarían descuadrados con respecto a los demás. Una solución
+        rápida es usar justify-content: left, pero el header calendario quedaría
+        más largo que los días.
+        Otra opción simple pero poco elegante sería tener los 7 días
+        en la última semana y ocultar los los 4 que sobran con visibility: hidden.
+        Lo vamos a dejar así */
+        justify-content: start ;
+      }
+
+      .semana div {
+        border: 1px solid black;
+        border-radius: 5px;
+        /* Para centrar los números podemos usar estas tres */
+        display: flex;
+        justify-content: center; /* Horizontalmente */
+        place-items: center; /* Veticalmente */
+        /* Para que la caja tenga el mismo alto que ancho */
+        aspect-ratio: 1; 
+        width: 10%;
+        /* Para que el padding y borde no se sume al ancho y alto de la caja */
+        box-sizing: border-box;
+      }
+      /* Ponemos los domingos en rojo: 7n indica cada 7 divs */
+      .calendario .semana div:nth-child(7n) {
+        color: red;
+      }
+      .calendario .semana div:hover {
+        border: 4px solid green;
+      }
+      /* Ponemos en verde el día 4 y 12
+      - el div 4 de la primera semana
+      - el div 5 de la segunda semana
+      También le ponemos posicionamiento relative pues queremos que al pasar el 
+      ratón por encima de estos días aparezca un texto explicativo del día, lo cual
+      haremos usando posicionamiento absoluto en ese texto para colocarlo respecto a su
+      contenedor. Si no lo hacemos, son contenedor, a efecto de posicionamiento absoluto,
+       será el body.
+
+       Una opción más sencilla sería crear una clase y aplicarle esa clase a esos divs 
+       */
+      .calendario .semana div:has(span) {
+        color: green;
+        position: relative;
+      }
+
+      /* Los textos de esos días especiales los vamos a tener en un span oculto.
+      También sería más corto usar una clase en lugar de escribir todo esto.
+      Otra alternativa sería: los divs dentro de semana que tengan span 
+      .semana div:has(span) o simplemente  .semana span { */
+      .semana:first-of-type div:nth-of-type(4) span, .semana:nth-of-type(2) div:nth-of-type(5) span {
+        display: none; /* Para que no se eva ni ocupe espacio. Con visibility: hidden 
+        podemos ocultarlo pero su espacio seguiría y se vería vacía esa zona */
+        position: absolute; /* Para colocar el span a nuestro gusto dentro de la caja */
+        top:50%; /* Que empieze a dibujar la caja a partir del 50% del contenedor */
+        left:20%; /* y un 20% a la izquierda */
+        font-size: 1rem;
+        background-color: rgb(23, 105, 237);
+        color: white;
+        padding: 5px;
+      }
+      /* Otra alternativa sería: los divs dentro de semana que tengan span 
+      .semana div:has(span):hover { */
+      .semana:first-of-type div:nth-of-type(4):hover span, .semana:nth-of-type(2) div:nth-of-type(5):hover span {
+        display: block; /* Para volver a mostrarlo */
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="calendario">
+        <header>Calendario</header>
+         <!-- Debemos crear un contenedor por cada 7 días para 
+        asegurarnos que no se pongan más. -->
+        <div class="semana">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4<span>Examen de HTML</span></div>
+          <div>5</div>
+          <div>6</div>
+          <div>7</div>
+        </div>
+        <div class="semana">
+          <div>8</div>
+          <div>9</div>
+          <div>10</div>
+          <div>11</div>
+          <div>12<span>Examen de CSS</span></div>
+          <div>13</div>
+          <div>14</div>
+        </div>
+        <div class="semana">
+          <div>15</div>
+          <div>16</div>
+          <div>17</div>
+          <div>18</div>
+          <div>19</div>
+          <div>20</div>
+          <div>21</div>
+        </div>
+        <div class="semana">
+          <div>22</div>
+          <div>23</div>
+          <div>24</div>
+          <div>25</div>
+          <div>26</div>
+          <div>27</div>
+          <div>28</div>
+        </div>
+        <div class="semana">
+          <div>29</div>
+          <div>30</div>
+          <div>31</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
